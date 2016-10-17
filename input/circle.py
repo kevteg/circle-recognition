@@ -1,12 +1,14 @@
 import cv2
 from helpers import isreal
 import random
+import subprocess
+import scipy.io
 import numpy as np
 class generate():
     def __init__(self, number, image, circle_size, quantity, aspect):
         self.ok = True
         try:
-            self.number = number if str(number).isdigit() else None
+            self.number = int(number) if str(number).isdigit() else None
             self.circle_size = int(circle_size) if str(circle_size).isdigit() and int(circle_size) > 10 and int(circle_size) <= 100  else None
             self.quantity = int(quantity) if str(quantity).isdigit() and int(quantity) > 0 and int(quantity) < 15 else None
             self.aspect = float(aspect) if isreal(aspect) and float(aspect) > 0 and float(aspect) <= 1 else None
@@ -21,11 +23,22 @@ class generate():
 
     def run(self):
         if self.ok:
-            white, an_image = self.addCircles(self.image, self.circle_size, self.quantity)
-            cv2.imshow('image',an_image)
-            cv2.imshow('image2',white)
-            cv2.waitKey(0)
-            cv2.destroyAllWindows()
+            try:
+                subprocess.Popen('mkdir images', shell=False)
+                subprocess.Popen('mkdir matrix', shell=False)
+            except:
+                pass
+            for i in range(self.number):
+                pimage = self.image.copy()
+                input_image, expected_output = self.addCircles(pimage, self.circle_size, self.quantity)
+                cv2.imwrite("./images/" + str(i) + "-input.jpg", input_image)
+                cv2.imwrite("./images/" + str(i) + "-output.jpg", expected_output)
+                scipy.io.savemat('./matrix/' + str(i) + '-input.mat', mdict={'image_input': input_image})
+                scipy.io.savemat('./matrix/' + str(i) + '-output.mat', mdict={'image_output': expected_output})
+            # cv2.imshow('image',an_image)
+            # cv2.imshow('image2',white)
+            # cv2.waitKey(0)
+            # cv2.destroyAllWindows()
 
     def addCircles(self, image, radious, quantity = 1):
         width, height = image.shape[:2]

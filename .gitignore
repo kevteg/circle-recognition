@@ -1,2 +1,4 @@
 *.jpg
 *.png
+input/image/*.png
+input/matrix/*.mat
