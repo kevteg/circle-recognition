@@ -3,4 +3,6 @@
 *.png
 input/image/*.png
 input/matrix/*.mat
+*input.mat
+*output.mat
 *.pyc
