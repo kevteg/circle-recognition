@@ -1,10 +1,12 @@
-function [X,Y] = loadSamples(num)
+function [X,Y,inX,inY,outX,outY] = loadSamples(num)
   system("rm matrix/*.mat");
-  system(["python3 input/generate.py -i 1.jpg -n ", num2str(num)]);
+  system(["python input/generate.py -i 1.jpg -n ", num2str(num)]);
   X1 = load("matrix/0-input.mat","image_input").image_input;
+  [inX,inY] = size(X1);
   X1 = X1(:);
   Y1 = load("matrix/0-output.mat","image_output").image_output;
   Y1 = Y1(:,:,1);
+  [outX,outY] = size(Y1);
   Y1 = Y1(:);
   X = zeros(num,size(X1),"uint8");
   Y = zeros(num,size(Y1),"uint8");
