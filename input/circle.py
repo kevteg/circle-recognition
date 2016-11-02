@@ -24,8 +24,8 @@ class generate():
     def run(self):
         if self.ok:
             try:
-                subprocess.Popen('mkdir images', shell=False)
-                subprocess.Popen('mkdir matrix', shell=False)
+                subprocess.Popen('mkdir images', shell=True)
+                subprocess.Popen('mkdir matrix', shell=True)
             except:
                 pass
             for i in range(self.number):
