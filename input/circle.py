@@ -47,16 +47,17 @@ class generate():
         xlist = []
         ylist = []
         for q in range(quantity):
-            x = random.randrange(radious, height - radious)
-            while sum([1 if x < xvalue and x + radious*2 > xvalue or x > xvalue and xvalue + radious*2 > x  else 0 for xvalue in xlist ]):
-                x = random.randrange(radious, height - radious)
+            radious_new = random.randrange(10, radious)
+            x = random.randrange(radious_new, height - radious_new)
+            while sum([1 if x < xvalue and x + radious_new*2 > xvalue or x > xvalue and xvalue + radious_new*2 > x  else 0 for xvalue in xlist ]):
+                x = random.randrange(radious_new, height - radious_new)
 
-            y = random.randrange(radious, width - radious)
-            while sum([1 if y < yvalue and y + radious*2 > yvalue or y > yvalue and yvalue + radious*2 > y  else 0 for yvalue in ylist ]):
-                y = random.randrange(radious, width - radious)
+            y = random.randrange(radious_new, width - radious_new)
+            while sum([1 if y < yvalue and y + radious_new*2 > yvalue or y > yvalue and yvalue + radious_new*2 > y  else 0 for yvalue in ylist ]):
+                y = random.randrange(radious_new, width - radious_new)
             # print((x, y))
-            cv2.circle(image, (x,y), radious, (0,0,0), -1)
-            cv2.circle(white_img, (x,y), radious, (0,0,0), -1)
+            cv2.circle(image, (x,y), radious_new, (0,0,0), -1)
+            cv2.circle(white_img, (x,y), radious_new, (0,0,0), -1)
             xlist.append(x)
             ylist.append(y)
         return image, white_img
