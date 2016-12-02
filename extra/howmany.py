@@ -8,12 +8,10 @@ class howmany():
 
     def info(self):
         img = cv2.imread(self.image_path, 0)
-        img = cv2.medianBlur(img,21)
+        #img = cv2.medianBlur(img,21)
 
-        output = cv2.cvtColor(img,cv2.COLOR_GRAY2BGR)
+        #output = cv2.cvtColor(img,cv2.COLOR_GRAY2BGR)
         circles = cv2.HoughCircles(img,cv2.HOUGH_GRADIENT,1,200, param1=35,param2=30,minRadius=10,maxRadius=100)
-        cv2.imshow("output", img)
-        cv2.waitKey(0)
         result = []
         if circles is not None:
           circles = np.round(circles[0, :]).astype("int")
@@ -30,6 +28,4 @@ class howmany():
                   cv2.waitKey(0)
         else:
             print("No circles")
-        print(result)
-
         return result
