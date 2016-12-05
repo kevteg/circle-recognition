@@ -1,6 +1,6 @@
 function [X,Y,inX,inY,outX,outY] = loadSamples(num)
   system("rm matrix/*.mat");
-  system(["python3 input/generate.py -i 1.jpg -a 0.3 -n ", num2str(num)]);
+  system(["python input/generate.py -i 1.jpg -a 0.3 -n ", num2str(num)]);
   X1 = load("matrix/0-input.mat","image_input").image_input;
   [inX,inY] = size(X1);
   X1 = X1(:);

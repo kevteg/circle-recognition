@@ -26,29 +26,35 @@ a4 = sigmoid(z4);
 
 h = a4;
 
-for i= 1:m
-    for k=1:(outX*outY)
-        J = J + ((-Y(i,k)*log(h(i,k))) - ((1-Y(i,k))*log(1-h(i,k))));
-    end
-end
+%for i= 1:m
+%    for k=1:(outX*outY)
+%        J = J + ((-Y(i,k)*log(h(i,k))) - ((1-Y(i,k))*log(1-h(i,k))));
+%    end
+%end
+
+J = J + sum(sum(((-Y.*log(h)) - ((1-Y).*log(1-h)))));
 
 J = J/m;
 Theta1Reg = 0;
 Theta2Reg = 0;
 
-for j=1:hidden_layer_size
-    for k=2:(outX+outY)+1
-        Theta1Reg = Theta1Reg + (Theta1(j,k)^2);
-    end
-end
+%for j=1:hidden_layer_size
+%    for k=2:(outX+outY)+1
+%        Theta1Reg = Theta1Reg + (Theta1(j,k)^2);
+%    end
+%end
 
-for j=1:hidden_layer_size
-    for k=2:hidden_layer_size+1
-        Theta2Reg = Theta2Reg + (Theta2(j,k)^2);
-    end
-end
+Theta1Reg = Theta1Reg + sum(sum(Theta1(:,2:end).^2));
 
-J = J + ((lambda/(2*m))*(Theta1Reg+Theta2Reg));
+%for j=1:hidden_layer_size
+%    for k=2:hidden_layer_size+1
+%        Theta2Reg = Theta2Reg + (Theta2(j,k)^2);
+%    end
+%end
+
+Theta2Reg = Theta2Reg + sum(Theta2(:,2:end).^2);
+
+J = J + sum(sum((lambda./(2.*m)).*(Theta1Reg+Theta2Reg)));
 
 delta_4 = h - Y;
 delta_3 = (delta_4 * Theta3(:,2:end)).*sigmoidGradient(z3);
