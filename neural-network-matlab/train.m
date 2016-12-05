@@ -10,5 +10,5 @@ function [nn_params,cost] = train()
   options = optimset('MaxIter', 500);
   lambda = 1;
   costFunc = @(p) costFunction(p,X,Y,lambda,hidden_layer_size,outX,outY);
-  [nn_params, cost] = fmincg(costFunc, initial_nn_params, options)
+  [nn_params, cost] = fmincg(costFunc, initial_nn_params, options);
   end

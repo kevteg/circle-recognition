@@ -14,7 +14,7 @@ Theta3 = reshape(nn_params(start_point3:end_point3),outX*outY,hidden_layer_size+
 
 m = size(X,1);
 
-a1 = [ones(m, 1) X];
+a1 = [ones(m, 1) double(X)];
 z2 = a1 * Theta1';
 a2 = sigmoid(z2);
 a2 = [ones(m,1) a2];
@@ -56,7 +56,7 @@ Theta2Reg = Theta2Reg + sum(Theta2(:,2:end).^2);
 
 J = J + sum(sum((lambda./(2.*m)).*(Theta1Reg+Theta2Reg)));
 
-delta_4 = h - Y;
+delta_4 = double(h - Y);
 delta_3 = (delta_4 * Theta3(:,2:end)).*sigmoidGradient(z3);
 delta_2 = (delta_3 * Theta2(:,2:end)).*sigmoidGradient(z2);
 Theta1(:,1) = 0;
