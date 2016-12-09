@@ -14,6 +14,8 @@ function [X,Y,inX,inY,outX,outY] = loadSamples(num)
     X(n,:) = load(["matrix/" num2str(n-1) "-input.mat"],"image_input").image_input(:);
     Y(n,:) = load(["matrix/" num2str(n-1) "-output.mat"],"image_output").image_output(:,:,1)(:);
   end
+  X = double(X);
+  Y = double(Y);
   X = X./255;
   Y = Y./255;
 end

@@ -16,7 +16,7 @@ a2 = [ones(m,1) a2];
 z3 = a2 * Theta2';
 a3 = sigmoid(z3);
 
-Y = a3 .*  255;
+Y = a3;
 
 imagenY = reshape(Y,outX,outY);
 imagenX = reshape(X,outX,outY);
