@@ -9,7 +9,7 @@ class generate():
         self.ok = True
         try:
             self.number = int(number) if str(number).isdigit() else None
-            self.circle_size = int(circle_size) if str(circle_size).isdigit() and int(circle_size) > 30 and int(circle_size) <= 100  else None
+            self.circle_size = int(circle_size) if str(circle_size).isdigit() and int(circle_size) > 10 and int(circle_size) <= 100  else None
             self.quantity = int(quantity) if str(quantity).isdigit() and int(quantity) > 0 and int(quantity) < 15 else None
             self.aspect = float(aspect) if isreal(aspect) and float(aspect) > 0 and float(aspect) <= 1 else None
             self.image = cv2.imread(image)
@@ -47,17 +47,16 @@ class generate():
         xlist = []
         ylist = []
         for q in range(quantity):
-            radious_new = random.randrange(radious*0.1, radious)
-            x = random.randrange(radious_new, height - radious_new)
-            while sum([1 if x < xvalue and x + radious_new*2 > xvalue or x > xvalue and xvalue + radious_new*2 > x  else 0 for xvalue in xlist ]):
-                x = random.randrange(radious_new, height - radious_new)
+            x = random.randrange(radious, height - radious)
+            while sum([1 if x < xvalue and x + radious*2 > xvalue or x > xvalue and xvalue + radious*2 > x  else 0 for xvalue in xlist ]):
+                x = random.randrange(radious, height - radious)
 
-            y = random.randrange(radious_new, width - radious_new)
-            while sum([1 if y < yvalue and y + radious_new*2 > yvalue or y > yvalue and yvalue + radious_new*2 > y  else 0 for yvalue in ylist ]):
-                y = random.randrange(radious_new, width - radious_new)
+            y = random.randrange(radious, width - radious)
+            while sum([1 if y < yvalue and y + radious*2 > yvalue or y > yvalue and yvalue + radious*2 > y  else 0 for yvalue in ylist ]):
+                y = random.randrange(radious, width - radious)
             # print((x, y))
-            cv2.circle(image, (x,y), radious_new, (0,0,0), -1)
-            cv2.circle(white_img, (x,y), radious_new, (0,0,0), -1)
+            cv2.circle(image, (x,y), radious, (0,0,0), -1)
+            cv2.circle(white_img, (x,y), radious, (0,0,0), -1)
             xlist.append(x)
             ylist.append(y)
         return image, white_img
