@@ -1,13 +1,12 @@
 %Neural Network Training
-
-TrainingSamples = 10;
-hidden_layers = 2;
-[X,Y,inX,inY,outX,outY] = loadSamples(TrainingSamples);
-if hidden_layers>1
-    Thetas = zero(hidden_layers-1,outX*outY,1+(outX*outY));
-    for n=1:hidden_layers-1
-      Thetas(n,:,:) = initializeWeights(outX*outY,outX*outY);
-    end
-end
-ThetaFinal = zeros(outX*outY,1+(inX+inY));
-ThetaFinal = initializeWeights(inX*inY,outX*outY);
+function [nn_params,cost] = train(lambda)
+  TrainingSamples = 100;
+  hidden_layer_size = 10;
+  [X,Y,inX,inY,outX,outY] = loadSamples(TrainingSamples);
+  Theta1 = initializeWeights(outX*outY,hidden_layer_size);
+  Theta2 = initializeWeights(hidden_layer_size,outX*outY);
+  initial_nn_params = [Theta1(:);Theta2(:)];
+  options = optimset('MaxIter', 500);
+  costFunc = @(p) costFunction(p,X,Y,lambda,hidden_layer_size,outX,outY);
+  [nn_params, cost] = fmincg(costFunc, initial_nn_params, options);
+  end
